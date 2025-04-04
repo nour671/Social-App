@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'ngx-toastr/toastr';
+
+
+body {
+  background-color: #eee;
+}
+
+
+.btn-main {
+  @apply bg-blue-700 text-white px-10 text-center md:px-12 py-2 mt-2 rounded-lg border disabled:bg-gray-900 hover:bg-blue-900 transition-colors duration-500;
+
+}
+.main-sec {
+  @apply bg-gray-50 rounded border shadow p-4;
+}
+.main-container{
+  @apply  container mx-auto px-4 sm:px-6 lg:px-8;
+}

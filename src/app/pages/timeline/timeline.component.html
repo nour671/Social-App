@@ -1,0 +1,112 @@
+<section class=" w-[90%] lg:w-1/2 mx-auto my-3  ">
+
+  <div class=" bg-white rounded-md p-3">
+    <div class="mb-2">
+      <input  data-modal-target="static-modal" data-modal-toggle="static-modal" type="text" readonly id="large-input" class="block cursor-pointer rounded-full w-full p-3 text-gray-900 border border-gray-300  bg-gray-50 text-base placeholder:text-gray-600 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "placeholder="What's on your mind ..." >
+  </div>
+
+
+<!-- Main modal -->
+ <!-- @if (isModalOpen) {} -->
+<div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-7 mt-10 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add new post
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5 space-y-4">
+              <textarea [(ngModel)]="content"  id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 placeholder:text-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+              <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                    </div>
+                    <input (change)="changeImage($event)" id="dropzone-file" type="file" class="hidden" />
+                </label>
+              </div>
+
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button (click)="createPost()"  type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  @if (isLoading) {
+                    <svg class="w-5 h-5 animate-spin inline-block mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h-8z"></path>
+                    </svg>
+                  }
+                  post</button>
+                <button data-modal-hide="static-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+  </div>
+
+  @if (postList.length > 0) {
+    @for (post of postList; track post._id) {
+      <div class="border bg-white border-gray-200 rounded-lg mt-7 p-4 mb-4 dark:border-gray-700">
+        <div class="flex items-center gap-3">
+          <img class="w-10 h-10 rounded-full object-cover" [src]="post.user.photo" alt="Profile Image">
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-white">{{ post.user.name }}</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ post.createdAt | date:'medium' }}</p>
+          </div>
+        </div>
+        @if (post.body) {
+          <p class="mt-2 text-gray-700 dark:text-gray-300">{{ post.body }}</p>
+        }
+        @if (post.image) {
+          <img class="mt-2 w-full h-auto rounded-lg" [src]="post.image" alt="Post Image">
+        }
+        <div class="mt-3 flex gap-4">
+          <!-- <button class="text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            <span>0 Likes</span>
+          </button> -->
+          <button #commentBtn class="text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            <span>{{ post.comments.length }} Comments</span>
+          </button>
+        </div>
+        <!-- Comments Section for Each Post -->
+        <div class="mt-4">
+          @defer (on interaction(commentBtn)) {
+            <app-comments [postId]="post._id"></app-comments>
+          }
+
+        </div>
+      </div>
+    }
+  } @else {
+    <p class="text-gray-500 dark:text-gray-400">{{ 'noPosts' | translate }}</p>
+  }
+
+ 
+
+
+</section>

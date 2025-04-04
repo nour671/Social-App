@@ -1,0 +1,156 @@
+<section class="  overflow-auto my-10 min-h[100vh] w-[90%] sm:w-3/4 mx-auto bg-white rounded border shadow-lg shadow-slate-300 drop-shadow-lg p-10 dark:bg-gray-900 dark:text-gray-400 ">
+  <h2 class="text-3xl font-medium text-center text-blue-800 capitalize">{{'signin.title' |translate}}</h2>
+
+  <form [formGroup]="signin" (ngSubmit)="submitForm()">
+    <div class="my-6">
+      @let emailControl = signin.get('email');
+      <!-- <label
+        for="email"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >{{'signin.email' |translate}}</label
+      > -->
+      <input
+        formControlName="email"
+        type="email"
+        id="email"
+         placeholder="Type Your Email . . ."
+        class="bg-white border placeholder: font-medium text-gray-600  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-700 focus:border-blue-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-700 dark:focus:border-blue-700"
+      />
+
+      @if (emailControl?.errors && emailControl?.touched) {
+      <div
+        class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert"
+      >
+        <svg
+          class="shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+          />
+        </svg>
+        <span class="sr-only">Danger</span>
+        <div>
+          <ul>
+            @if (emailControl?.getError('required')) {
+            <li>{{ "signUp.errors.emailRequired" | translate }}</li>
+            }@else if (emailControl?.getError('email')) {
+            <li>{{ "signUp.errors.emailInvalid" | translate }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="my-6">
+      @let passwordControl = signin.get('password');
+      <!-- <label
+        for="password"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >{{'signin.password' |translate}}</label
+      > -->
+      <input
+        formControlName="password"
+        type="password"
+        id="password"
+        placeholder="Type Your Password . . ."
+        class="bg-white placeholder: font-medium text-gray-600  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-700 focus:border-blue-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-700 dark:focus:border-blue-700"
+      />
+
+      @if (passwordControl ?.errors && passwordControl ?.touched) {
+      <div
+        class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert"
+      >
+        <svg
+          class="shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+          />
+        </svg>
+        <span class="sr-only">Danger</span>
+        <div>
+          <ul>
+            @if (passwordControl ?.getError('required')) {
+            <li>{{ "signUp.errors.passwordRequired" | translate }}</li>
+            }@else if (passwordControl ?.getError('pattern')) {
+            <li>
+              {{ "signUp.errors.passwordPattern" | translate }}
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="flex items-center justify-end gap-4">
+      <p class=" text-gray-600 font-medium">{{'signin.notRegister' |translate}} <a
+        class=" font-medium cursor-pointer text-blue-700 transition-colors duration-500"
+        routerLink="/signup"
+        >{{'signin.createAccount' |translate}}</a
+      ></p>
+
+      <button [disabled]="isLoading" type="submit" class="btn-main">
+        {{'signin.signinButton' |translate}}
+        @if (isLoading) {
+        <i class="fas fa-spin fa-spinner"></i>
+
+        }
+      </button>
+    </div>
+
+    @if (msgError) {
+    <div
+      class="flex mt-4 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+    >
+      <svg
+        class="shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Danger</span>
+      <div>
+        <span class="font-medium">{{ msgError }}</span>
+      </div>
+    </div>
+    } @if (msgSuccess) {
+    <div
+      class="flex mt-4 items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+      role="alert"
+    >
+      <svg
+        class="shrink-0 inline w-4 h-4 me-3"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <div>
+        <span class="font-medium">{{ msgSuccess }}</span>
+      </div>
+    </div>
+    }
+  </form>
+</section>
